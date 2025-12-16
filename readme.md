@@ -1,174 +1,226 @@
-# 🚀 CAG Project API - Chat with Your PDF
-Welcome to the CAG Project API, a simple yet powerful system to manage and interact with PDF documents using AI. This guide will help new users understand, set up, and use the project from A to Z.
+# 🚀 CAG Project (Backend)
 
-# 📌 Project Overview
-The CAG Project API allows users to:
+**Chat with Your PDFs using AI – FastAPI Backend**
 
-- Upload and store PDF files
-- Extract and query text from PDFs
-- Update existing PDFs with new content
-- Delete stored PDFs
-- Interact with stored data using a Large Language Model (LLM)
-- Authenticate users and protect API endpoints with JWT
+A clean, secure, and extensible **backend-only FastAPI project** that allows users to upload PDF documents, extract text, and query them using AI (Google Gemini). This project is designed as a **learning-focused backend portfolio project**, suitable for internships, resume showcasing, and as a foundation for future ML/AI systems.
 
-This project is designed for learning, testing, and building AI-driven document systems.
+---
 
-# 📂 CAG Project - Complete Structure
-CAG Project Code/
+## 📌 Project Purpose
+
+The **CAG Project** is intentionally built as a **backend-first system**:
+
+* 🎯 Strengthen Python & FastAPI skills
+* 🎯 Practice authentication, API design, and clean architecture
+* 🎯 Build a solid base for future **ML / AI integrations**
+* 🎯 Showcase real-world backend practices for internships
+
+> ❗ This repository does **not** include any frontend/UI.
+> APIs are tested and explored via **Swagger UI**.
+
+---
+
+## ✨ Key Features
+
+### 🔐 Authentication & Security
+
+* User signup & login
+* Password hashing using **bcrypt**
+* JWT-based authentication
+* Protected API routes
+
+### 📄 PDF Handling
+
+* Upload PDF files
+* Automatic text extraction
+* Query PDFs using natural language
+* Update (append-style) PDF content
+* Delete stored PDFs
+* List all stored document UUIDs
+
+### 🤖 AI Integration
+
+* Google Gemini API for document-based Q&A
+* Context-aware responses from extracted PDF text
+
+### 🧱 Clean Architecture
+
+* Modular folder structure
+* Clear separation of concerns (routers, services, utils)
+* Easy to extend (DB, vector search, embeddings, ML models)
+
+---
+
+## 🏗️ Tech Stack
+
+* **Language**: Python 3.11
+* **Framework**: FastAPI
+* **Authentication**: JWT (JSON Web Tokens)
+* **AI**: Google Gemini API
+* **PDF Processing**: PyPDF2
+* **Storage**: In-memory (for learning & simplicity)
+
+---
+
+## 📂 Project Structure
+
+```
+CAG-Project/
 │
-├── main.py                     # Entry point of the FastAPI application
-├── requirements.txt            # Python dependencies
-├── .env                        # Environment variables (API keys, JWT secret)
+├── main.py                    # Application entry point
+├── requirements.txt           # Python dependencies
+├── .env.example               # Environment variable template
+├── .gitignore                 # Git ignore rules
+├── README.md                  # Project documentation
 │
-├── src/
-│   ├── routers/
-│   │   ├── data_handler.py     # Handles PDF CRUD, querying, JWT verification
-│   │   │                       # ✅ Added filename sanitization
-│   │   ├── user_auth.py        # Signup and Login endpoints
-│   │   │
-│   │   └── models/
-│   │       ├── post_request.py # Pydantic model for PDF uploads/updates
-│   │       └── user_models.py  # Pydantic models for user signup/login
-│   │
-│   ├── services/
-│   │   ├── user_service.py     # User creation & authentication logic
-│   │   └── jwt_service.py      # JWT token creation and verification
-│   │
-│   ├── utils/
-│   │   ├── pdf_processor.py    # PDF text extraction
-│   │   ├── llm_client.py       # Interact with LLM (AI) for queries
-│   │   ├── password_utils.py   # Password hashing and verification
-│   │   ├── uuid_utils.py       # Generate UUIDs
-│   │   └── filename_sanitizer.py  # ✅ Filename sanitization utility
-│   │
-│   ├── data_store.py           # Temporary storage for PDF uploads and extracted text
-│   │
-│   └── database/
-│       └── memory_db.py        # Temporary user database (signup/authentication)
-│
-└── README.md                   # Project documentation
+└── src/
+    ├── routers/               # API route definitions
+    │   ├── data_handler.py    # PDF CRUD & query APIs
+    │   ├── user_auth.py       # Authentication APIs
+    │   └── models/            # Pydantic request/response models
+    │
+    ├── services/              # Business logic
+    │   ├── user_service.py
+    │   └── jwt_service.py
+    │
+    ├── utils/                 # Helper utilities
+    │   ├── pdf_processor.py
+    │   ├── llm_client.py
+    │   ├── password_utils.py
+    │   ├── uuid_utils.py
+    │   └── filename_sanitizer.py
+    │
+    ├── data_store.py          # In-memory document storage
+    └── database/
+        └── memory_db.py       # In-memory user storage
+```
 
+---
 
+## 🚀 Getting Started
 
-# ⚙️ Features & Functionality
+### Prerequisites
 
-## 1. User Authentication (JWT)
-- Users can signup and login.
-- Passwords are hashed securely.
-- Login provides a JWT token used to access protected endpoints.
-- JWT token ensures secure operations on PDF files.
+* Python 3.11+
+* Conda (recommended) or pip
+* Google Gemini API Key
 
-## 2. UUID Mechanism
-- Each PDF upload is linked with a unique UUID.
-- Users can generate a UUID before uploading files (`/take_uuid` endpoint).
-- UUID helps track and manage files easily.
-
-## 3. PDF Management
-All PDF operations are JWT-protected:
-
-- **Upload PDF (POST /upload/{uuid})**  
-  - Upload a new PDF.  
-  - Extract text automatically.  
-  - Store metadata and extracted text in memory.
-
-- **Update PDF (PUT /update/{uuid})**  
-  - Append new content from another PDF to an existing UUID.
-
-- **Query PDF (GET /query/{uuid})**  
-  - Ask questions to AI based on PDF text.  
-  - Returns AI-generated responses using LLM.
-
-- **Delete PDF (DELETE /data/{uuid})**  
-  - Remove PDF and its text from memory.
-
-- **List All UUIDs (GET /list_uuids)**  
-  - View all uploaded UUIDs with associated metadata.
-
-# 🧰 Utilities
-- **Password Utils**: Secure hashing and verification.
-- **PDF Processor**: Extract text from PDF files.
-- **LLM Client**: Send queries to AI and receive answers.
-- **UUID Utils**: Generate unique IDs for files.
-
-# ⚡ Setup & Run
-Clone the repository:
+### Installation
 
 ```bash
-git clone <repository-url>
-cd "CAG Project Code"
+git clone https://github.com/mushahidhussainleel/CAG-Project.git
+cd CAG-Project
+```
 
-Create Conda environment and install dependencies:
+```bash
+conda create -n cag-project python=3.11 -y
+conda activate cag-project
+```
 
-conda create -n python-project python=3.11 -y
-conda activate python-project
+```bash
 pip install -r requirements.txt
+```
 
+---
 
-Add environment variables in .env:
+## 🔧 Environment Configuration
 
-GEMINI_API_KEY=<Your Google Gemini API Key>
+Create a `.env` file using the example:
 
+```bash
+cp .env.example .env
+```
 
-Run the FastAPI application:
+Add your API key:
 
+```env
+GEMINI_API_KEY=your_gemini_api_key_here
+JWT_SECRET_KEY=your_secret_key
+JWT_ALGORITHM=HS256
+JWT_EXPIRATION_HOURS=24
+HOST=127.0.0.1
+PORT=8001
+```
+
+> ⚠️ `.env` is intentionally ignored by Git.
+
+---
+
+## ▶️ Running the Application
+
+```bash
 python main.py
-
+```
 
 Access the API docs:
 
-Swagger UI: http://127.0.0.1:8001/docs
+* Swagger UI: [http://127.0.0.1:8001/docs](http://127.0.0.1:8001/docs)
+* ReDoc: [http://127.0.0.1:8001/redoc](http://127.0.0.1:8001/redoc)
 
-ReDoc: http://127.0.0.1:8001/redoc
+---
 
-# 🔐 Security Notes
+## 📡 API Overview
 
-JWT tokens protect critical endpoints.
+### Authentication
 
-Always keep your API keys and .env secure.
+| Method | Endpoint         | Description         |
+| ------ | ---------------- | ------------------- |
+| POST   | `/api/v1/signup` | Register new user   |
+| POST   | `/api/v1/login`  | Login & receive JWT |
 
-Passwords are hashed before storing in memory.
+### PDF Operations (JWT Required)
 
-🎯 Quick Start Example
+| Method | Endpoint                | Description            |
+| ------ | ----------------------- | ---------------------- |
+| GET    | `/take_uuid`            | Generate document UUID |
+| POST   | `/api/v1/upload/{uuid}` | Upload PDF             |
+| GET    | `/api/v1/query/{uuid}`  | Query PDF with AI      |
+| PUT    | `/api/v1/update/{uuid}` | Update PDF content     |
+| DELETE | `/api/v1/data/{uuid}`   | Delete PDF             |
+| GET    | `/api/v1/list_uuids`    | List all documents     |
 
-Signup a new user:
+---
 
-POST /api/v1/signup
-{
-    "name": "Alice",
-    "email": "alice@example.com",
-    "password": "secure123",
-    "country": "Pakistan"
-}
+## 🎯 Learning Outcomes
 
+This project demonstrates:
 
-Login to get JWT:
+* REST API design with FastAPI
+* Authentication & authorization flows
+* Secure password handling
+* Clean backend architecture
+* Practical AI API integration
+* Backend preparation for ML systems
 
-POST /api/v1/login
-{
-    "email": "alice@example.com",
-    "password": "secure123"
-}
+---
 
+## 🔮 Future Enhancements (Optional)
 
-Upload PDF using JWT:
+* Persistent database (PostgreSQL / MongoDB)
+* Vector embeddings & semantic search
+* File-based or cloud storage
+* Rate limiting & logging
+* ML-based document summarization
 
-POST /api/v1/upload/<UUID>
-Headers: Authorization: Bearer <JWT>
+---
 
+## 👨‍💻 Author
 
-Query PDF:
+**Mushahid Hussain Leel**
 
-GET /api/v1/query/<UUID>?query=What is in the document?
-Headers: Authorization: Bearer <JWT>
+* GitHub: [https://github.com/mushahidhussainleel](https://github.com/mushahidhussainleel)
+* Repository: [https://github.com/mushahidhussainleel/CAG-Project](https://github.com/mushahidhussainleel/CAG-Project)
 
-# ✅ Summary
+---
 
-Complete PDF management system
+## ⭐ Support
 
-AI-driven query support
+If this project helped you:
 
-User authentication and JWT verification
+* ⭐ Star the repository
+* 🐞 Open issues for improvements
+* 📚 Use it as a learning reference
 
-Temporary in-memory storage
+---
 
-Easy-to-understand, beginner-friendly structure
+**This project is intentionally backend-only and focused on learning, clarity, and future ML growth.**
