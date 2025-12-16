@@ -1,9 +1,0 @@
-fastapi==0.111.2
-uvicorn[standard]==0.23.2
-python-multipart==0.0.6
-pydantic[email]==2.6.0
-PyPDF2==3.0.1
-requests==2.31.0
-python-dotenv==1.0.0
-PyJWT
-bcrypt == 3.2.0
