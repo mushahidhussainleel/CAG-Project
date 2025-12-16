@@ -1,7 +1,8 @@
 # 🚀 CAG Project (Backend)
 
 **Chat with Your PDFs using AI – FastAPI Backend**
-[![CAG Project Preview](https://claude.ai/public/artifacts/77fce7b4-f1fe-4c5c-aba0-5c7244176b1d)](https://claude.ai/public/artifacts/77fce7b4-f1fe-4c5c-aba0-5c7244176b1d)
+[![CAG Project Preview](https://claude.ai/public/artifacts/42649292-6467-4ace-b3b5-3b6736b40c17)](https://claude.ai/public/artifacts/42649292-6467-4ace-b3b5-3b6736b40c17)
+
 
 A clean, secure, and extensible **backend-only FastAPI project** that allows users to upload PDF documents, extract text, and query them using AI (Google Gemini). This project is designed as a **learning-focused backend portfolio project**, suitable for internships, resume showcasing, and as a foundation for future ML/AI systems.
 
